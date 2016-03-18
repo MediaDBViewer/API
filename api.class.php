@@ -7,8 +7,8 @@
 /* Konfig: */
 define(API_KEY_LEN, "10");
 define(API_VERSION, "1.00");
-define(API_KEY_DB, "/var/www/mediadb.ivaya.de/Key.sqlite");
-define(API_Rights, "/var/www/mediadb.ivaya.de/Rights.json");
+define(API_KEY_DB, "./Key.sqlite");
+define(API_Rights, "./Rights.json");
 
 if (!isset($_GET['Pretty'])) {
 	error_reporting(0); // PHP Fehler nur ausgeben wenn &Pretty gesetzt ist
