@@ -1,0 +1,207 @@
+1.4.11 (2016-03-16)
+
+ - Code: Primärschlüssel für Serien und Staffeln werden nun als String und nicht mehr als Integer behandelt
+
+1.4.10 (2016-03-09)
+
+ - Bugfix: App Absturz auf machen Geräten mit fehlerhaft erkannter Speicherkarte
+ - Bugfix: App stürzt an manchen Stellen ab, wenn die Zurück-Taste sehr schnell hintereinander gedrückt wird
+
+1.4.9 (2016-03-09)
+
+ - UI: Schauspieler wurden aus Tabelle ausgelagert und können unter dem Cover aufgerufen werden
+ - Feature: Schauspieler sind nun mit ihrer Rolle im Film verknüpft
+ - Feature: Schauspieler können angeklickt werden, um eine Liste ihrer Film anzuzeigen
+
+1.4.8 (2016-03-07)
+
+ - Bugfix: App-Absturz bei Android Version < 4.3
+ - Bugfix: Cover können bei Android Version < 4.3 nicht auf SD-Karte ausgelagert werden
+ - Bugfix: App lädt endlos, wenn Statistiken aufgerufen werden, während Internet verfügbar ist, aber Server nicht
+ - Feature: nutze Cache, wenn Internet verfügbar, aber Server nicht erreichbar
+
+1.4.7 (2016-03-02)
+
+ - Bugfix: App hängt sich beim Aufruf der Statistiken auf, wenn keine Internetverbindung besteht
+ - Bugfix: App stürzt ab, wenn Einstellungen ohne Verbindung zum Server aufgerufen werden
+ - Bugfix: App stürzt ab, wenn eine Episoden geöffnet wird, die nicht im Cache ist und keine Internetverbindung besteht
+ - Feature: bei Statistiken werden Fehler angezeigt, wenn keine Statistiken verfügbar sind oder keine Internetverbindung besteht
+ - Feature: bei Einstellungen werden Fehler angezeigt, wenn Server nicht erreichbar ist
+ - Feature: in allen Ansichten werden Hinweise angezeigt, wenn Daten nicht abgefragt werden können oder nicht im Cache sind
+ - UI: App-Icon ausgetauscht
+ - UI: default Cover ausgetauscht
+
+1.4.6 (2016-02-29)
+
+ - Bugfix: wenn man sich im WLAN anmelden muss, wird ein App-Update angezeigt, welches nicht existiert
+ - Bugfix: Anzahl der Staffeln wird in der Staffelliste nicht in der Titelleiste angezeigt
+ - Feature: App wertet aus, ob ein API-Key serverseitig gelöscht wurde und informiert den Nutzer
+
+1.4.5 (2016-02-27)
+
+ - Bugfix: Dialog für App Update wird mehrfach überlagert wenn Gerät gedreht wird
+ - UI: hellere Farbe für Filterbar Hintergrund
+ - UI: Hintergrundfarbe auf weiß gesetzt
+ - UI: Filterbar leicht transparent gemacht
+ - Bugfix: beim Aktualisieren einer Episode und Wechsel in die Statistikansicht, wird falscher Titel in Fragment angezeigt
+ - Bugfix: I9330 (Android 4.3) EOFException tritt beim Prüfen auf App-Updates auf
+
+1.4.4 (2016-02-26)
+
+ - Feature: unbekannte Spalten werden in Einstellungen und den Detailansichten mit dem Namen aus der Datenbank angezeigt
+ - Code: Prüfung auf Gültigkeit der Spalten in den Abfrage-Factories wurde entfernt
+ - Feature: Filme können über einen Share-Icon geteilt werden (imdd-Link wird geteilt)
+ - Feature: Einführung blaues Theme
+ - Bugfix: Umlaute in Kommentaren werden beim Update eines Films nicht übernommen
+ 
+1.4.3 (2016-02-24)
+
+ - Bugfix: die Ausrichtung des Displays wird beim Laden der Cover auf die aktuelle Fixiert
+
+1.4.2 (2016-02-23)
+
+ - Bugfix: unter Android 4.x wird die Speicherkarte nicht erkannt
+ - Bugfix: neueste Einträge im Changelog nun ganz oben
+ - Bugfix: App stürzt ab, wenn sie im Hintergrund durch Android beendet wurde
+ - Bugfix: App stürzt ab, wenn Handy in Filmdetailansicht gedreht wird (nur bei Aufruf über Filmliste)
+ - Feature: wenn App im Hintergrund durch Android beendet wird, wird sie im vorheringen Zustand nach dem Öffnen wieder initialisiert
+ - Bugfix: wenn App im Hintergrund durch Android beenet wird während Cover heruntergeladen werden, ist Oberfläche nach Neustart durch Fortschrittsdialog blockiert
+
+1.4.1 (2016-02-23)
+
+ - Bugfix: beim Reset der Filter wird die Sortierung nicht zurückgesetzt
+ - Feature: wenn in einer Filmansicht die imdbID angeklickt wird, wird nun in Chooser angezeigt, in dem der MediaDB Viewer nicht mehr erscheint
+ - Bugfix: Einträge im Navigationsmenu erscheinen mehrfach
+ - Bugfix: Cover werden auf der Speicherkarte nun so abgelegt, dass sie bei der Deinstallation der App mit gelöscht werden
+ - Bugfix: app blockiert nicht mehr, wenn nach Eingabe der Einstellungen auf Cover-Download anstatt auf Speichern geklickt wird
+ - Bugfix: wird ein Update eines Films oder einer Episode durchgeführt, wird der Cache beim Laden der Detailansicht nicht verwendet (gilt nicht für Listen!!!)
+ - Bugfix: Probleme mit Kriterium für Coverflow
+ - Bugfix: App stürzt ab, nachdem Cover im Hintergrund geladen wurden
+
+1.4.0 (2016-02-22)
+
+ - Bugfix: nach Einführung der Rechte ist "hinzugefügt" nun wieder Default-Kriterium für Coverflow nach Neuinstallation
+ - Bugfix: Fortschritt des Cover-Downloads verschwindet beim Drehen -> Drehung ist nun während Download deaktiviert
+ - Feature: beim App-Start wird auf Server nach Update für App gesucht (nur wenn mit WLAN verbunden)
+ - Feature: Dialog mit Changelog und Versionsnummern wird angezeigt, wenn Update verfügbar
+ - CleanUp: abweichender Cover-Server wurde aus Einstellungen entfernt
+ - Feature: Cover können auf Speicherkarte oder internem Speicher abgelegt werden
+ - Feature: in Einstellungen kann Speicherort eingestellt werden
+
+1.3.9 (2016-02-20)
+
+ - Feature: Anzeige in Serienliste, ob eine Serien abgeschlossen ist oder nicht
+ - Feature: Anzeige ob abgeschlossen oder nicht kann in Einstellungen aktiviert und deaktiviert werden
+ - Feature: Sortierkriterien werden jetzt auch über Rechte aussortiert
+
+1.3.8 (2016-02-17)
+
+ - Bugfix: App stürzt ab, wenn sie das erste mal geöffnet wird
+ - Bugfix: Englisch Filter wird in den Einstellungen angezeigt, obwohl noch kein Api-Key bzw. Server gesetzt ist
+
+1.3.7 (2016-02-17)
+
+ - Feature: in Splitscreen wird nur der Außenabstand geändert, beim vergrößern, um die Animation flüssiger zu machen
+ - Bugfix: App stürtzt beim klicken auf Update ab, wenn bestimmte Spalten nicht angezeigt werden
+ - Feature: Filter für Trailer wurde hinzugefügt
+
+1.3.6 (2016-02-12)
+
+ - Bugfix: Gesehen-Filter "nicht gesehen" geht nicht
+ - Bugfix: alle vom Server gelieferten Statistiken werden angezeigt
+ - Bugfix: wenn kein Name für Statistik vorhanden ist, wird View-Name angezeigt
+ - Code: Klasse StatisticObject wurde entfernt, Statistiken werden jetzt als ArrayLists von HashMaps verwaltet
+ - Feature: alle Rechte, die von der API übergeben werden, werden nur aktualisiert, wenn die Einstellungen geöffnet werden
+
+1.3.5 (2016-02-11)
+
+ - Bugfix: Gesehen Filter wird nicht angezeigt
+ - Bugfix: flüssigeres resizen des Splitscreens
+ - Bugfix: App stürzt ab, wenn während dem Laden der Filmliste der Bildschirm gedreht wird
+
+1.3.4 (2016-02-10)
+
+ - Feature: Splitscreen in Filmliste
+ - Feature: wird Vorschau in Splitscreen nach links gezogen, öffnet sich Detailansicht
+
+1.3.3 (2016-02-09)
+
+ - Bugfix: Genre und Schauspieler werden in der Film Detailansicht nicht angezeigt
+ - Bugfix: Filter Genre funktioniert nicht
+ - Bugfix: 3D Filter funktioniert nicht
+ - UI: ausklappbarer Bereich für Schauspieler in der Filmansicht
+ - Feature: FSK Filter hinzugefügt (auch als Default gesetzt)
+
+1.3.2 (2016-02-09)
+
+ - Bugfix: falsche Sortierreihenfolge der Attribute in den Detailansichten
+
+1.3.1 (2016-02-09)
+
+ - Bugfix: Coverdownloads starten nicht
+
+1.3.0 (2016-02-09)
+
+ - Feature: Einführung Rechteverwaltung
+ - Feature: Abfrage verfügbare und erlaubte Spalten von Server
+ - Feature: blende alle Spalten und Filter in den Einstellungen aus, die nicht für den API-Key freigegeben sind
+ - Feature: Abfrage Update-Recht
+ - Feature: zeige nur Statistiken an, die für den API-Key freigegeben sind
+ - Feature: Update Button wird ausgeblendet, wenn Recht nicht vorhanden
+ - Feature: Abfrage ob Key gültig ist
+ - Feature: Prüfung ob Kombination aus Api-Key und Server valide ist, bevor Werte gespeichert werden
+ - Bugfix: nur noch Abfrage angezeigter Werte
+ - Bugfix: Umwandlung von Umlauten unter Android 4
+
+1.2.7 (2016-02-07)
+
+ - Bugfix: wenn "verberge gesehene" Cover nicht gewählt ist wurden nur gesehene angezeigt
+ - Bugfix: wenn "verberge gesehene" Cover nicht gewählt ist, kam keine Information, wenn neue Cover verfügbar sind
+ - Bugfix: wenn App über Link geöffnet wird, wurde kein Cover angezeigt (in Detailansicht)
+
+1.2.6 (2016-02-06)
+
+ - Feature: Unterscheidung von deutschen und englischen Trailern
+
+1.2.5 (2016-02-06)
+
+ - Feature: unterstützung für Spalte Youtube wurde hinzugefügt
+
+1.2.4 (2016-02-06)
+
+ - UI: Design der Film- und Episodendetailansichten wurden im Landscape-Modus angepasst
+
+1.2.3 (2016-02-06)
+
+ - UI: Inhalt des Film wird nun ausklappbar über der Tabelle mit allen anderen Werten angezeigt
+
+1.2.2 (2016-02-05)
+
+ - Feature: Unterstützung für Spalte summary bei Filmen
+
+1.2.1 (2016-02-05)
+
+ - Bugfix: Checkboxen die als aktiv gespeichert sind, werden beim Start der Einstellungen als checked gesetzt
+ - Bugfix: App wird nicht vollständig geschlossen, wenn Zurück-Taste in der Home-Ansicht gedrückt wird
+ - Bugfix: mehrfache Einträge im Sidebarmenü nachdem App nicht vollständig beendet wurde
+
+1.2.0 (2016-02-05)
+
+ - Bugfix: App reagiert nun auf alle links, die "/title/tt" enthalten
+ - Feature: Drehbarkeit der App aktiviert
+ - Feature: Dynamische Layouts für Homescreen, Filmansicht, Episodenansicht
+ - Code: neues Persistenzkonzept über gesamte Applaufzeit hinweg
+
+1.1.0 (2016-02-04)
+
+ - Bugfix: App wird nur noch als Browser für imdb Links angeboten
+ - Feature: Auf dem Homebildschirm gibt es nun ein Navigationsmenü
+ 
+1.0.1 (2016-02-03)
+
+ - Bugfix: Absturz beim Aufruf von Statistiken, wenn nicht alle Views existieren
+
+1.0.0 (2016-02-03)
+
+ - erstes Release der App
+ - Einführung von Versionsnummern
