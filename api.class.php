@@ -5,10 +5,10 @@
  */
  
 /* Konfig: */
-define(API_KEY_LEN, 10);
-define(API_VERSION, 0.06);
-define(API_KEY_DB, "../Key.sqlite");
-define(API_Rights, "../Rights.json");
+define(API_KEY_LEN, "10");
+define(API_VERSION, "1.00");
+define(API_KEY_DB, "/var/www/mediadb.ivaya.de/Key.sqlite");
+define(API_Rights, "/var/www/mediadb.ivaya.de/Rights.json");
 
 if (!isset($_GET['Pretty'])) {
 	error_reporting(0); // PHP Fehler nur ausgeben wenn &Pretty gesetzt ist
@@ -24,13 +24,13 @@ class MediaDBAPI{
 	private $Statistik = array("QueryCounter" => 0);
 	private $Querys;
 	private $Tabellen = array("Filme","Serien", "Staffeln", "Episoden");
-	public  $SpaltenFilme = array("name",  "imdbID", "3d", "year", "fsk", "rating",  "youtube", "resolution", "duration", "size", "hdd", "added", "lastView", "lastUpdate",
+	public  $SpaltenFilme = array("name", "tagline",  "imdbID", "3d","titelOriginal","titelDeutsch", "collection", "year", "fsk", "rating",  "youtube", "resolution", "duration", "size", "hdd", "added", "lastView", "lastUpdate",
            "Genre", "Schauspieler", "views", "checked", "width", "height", "totalbitrate", "vcodec","acodecger", "abitrateger", "channelsger", "acodeceng", "abitrateeng", "channelseng", "comment",
             "md5" , "summary");
     public  $SpaltenEpisoden = array("episodenumber", "season_nr", "series_nr", "name", "source", "duration", "size", "hdd", "lastView", "added", "views", "checked",
             "width", "height", "totalbitrate", "vcodec", "acodecger", "abitrateger", "channelsger", "acodeceng", "abitrateeng", "channelseng", "comment", "md5");
 	public $StatistikViews = array("watchStatistic", "belegterSpeicher", "freierSpeicher", "laufzeitGesehen", "prozentualGesehen", "prozentualDefekt",
-									"defekteFilme", "defekteEpisoden", "DBstatistik", "GenreFilmanzahl", "SchauspielerFilmanzahl");
+									"defekteFilme", "defekteEpisoden", "DBstatistik", "GenreFilmanzahl", "SchauspielerFilmanzahl", "lastMD5Check", "Collections");
 	private $FilterEinfach = array("imdbID" => "imdbID", "acodecger" =>  "acodecger", "acodeceng" => "acodeceng", "vcodec" => "vcodec",
 									"resolution" => "resolution", "channelsger" => "channelsger", "channelseng" => "channelseng", "hdd" => "hdd");
 	private $FilterKomplex = array("Jahr" => "year", "Groesse" => "size", "Laufzeit" => "duration", "Hinzugefuegt" => "added", "Gesehen" => "lastView", 
@@ -40,7 +40,7 @@ class MediaDBAPI{
 	private $SpaltenEpi = array();
 	private $StatiViews = array();
 	private $WebAppSite = array(); //TODO Rechte für WebApp Seiten vergeben
-	private $Update = FALSE;
+	public  $Update = FALSE;
 	private $DebugOutput = FALSE;
 	public  $webapp = FALSE;
 	public $DB_Objekt;
@@ -185,9 +185,14 @@ class MediaDBAPI{
 					}
 					if(isset($GET_arr['Suche'])){
 						$SucheWort = $GET_arr['Suche'];
-						$Suche = "	(`name` LIKE '%".$SucheWort."%' OR `md5` LIKE '%".$SucheWort."%' OR `comment` LIKE '%".$SucheWort."%')";
-						//OR `year` = '".$GET_arr['Suche']."' OR `resolution` LIKE '%".$GET_arr['Suche']."%' 
-						$this->DebugOut($Suche);
+						if(in_array("titelOriginal", $this->SpaltenFilme)){
+							$SucheAdd .=" OR `titelOriginal` LIKE '%".$GET_arr['Suche']."%'";
+						}
+						if(in_array("titelDeutsch", $this->SpaltenFilme)){
+							$SucheAdd .=" OR `titelDeutsch` LIKE '%".$GET_arr['Suche']."%'";
+						}
+						$Suche = "	(`name` LIKE '%".$SucheWort."%' OR `md5` LIKE '%".$SucheWort."%' OR `comment` LIKE '%".$SucheWort."%' ".$SucheAdd.")";
+						//$this->DebugOut($Suche);
 						$Where .= (($first?"":" AND ").$Suche);
 						$first = false;
 					}
@@ -352,12 +357,27 @@ class MediaDBAPI{
 						$tempArray["Genre"] =  explode(",", ($GenreArr["Genre"]));
 					}
 					if($ListSchauspieler){
+						//TODO Rolle einbaue
+						/*
 						$Query = 'SELECT group_concat(s.name ORDER BY s.name) AS Schauspieler '.
 						'FROM FilmSchauspieler AS fs JOIN Schauspieler AS s ON  fs.schauspielerID = s.schauspielerID WHERE fs.imdbID="'.$entry["imdbID"].'"';
 						$Schauspieler = $this->query($Query);
 						if($this->DB_Objekt->error != ""){		return $this->error(1005, $this->DB_Objekt->error);}
 						$SchauspielerArr = $Schauspieler->fetch_array();
 						$tempArray["Schauspieler"] =  explode(",", ($SchauspielerArr["Schauspieler"]));
+						*/
+						$Query = 'SELECT s.name AS Schauspieler, fs.role AS Rolle  '.
+								'FROM FilmSchauspieler AS fs JOIN Schauspieler AS s ON  fs.schauspielerID = s.schauspielerID WHERE fs.imdbID="'.$entry["imdbID"].'"';
+						
+						$Schauspieler = $this->query($Query);
+						if($this->DB_Objekt->error != ""){		return $this->error(1005, $this->DB_Objekt->error);}
+						while($entry = $Schauspieler->fetch_array()){
+							$tempArray["Schauspieler"][$entry["Schauspieler"]] = $entry["Rolle"];
+						}
+								
+						
+						
+						
 					}
 					if ($Statistik == true) {
 						if (($GET_arr['Tabelle'] == "Staffeln")) { //TODO hier ist auch was geändert aber noch nicht getestet!!
@@ -366,7 +386,7 @@ class MediaDBAPI{
 									(in_array("views", $this->SpaltenEpi)==1?'avg(e.views) AS Views,':'').' '.
 									(in_array("size", $this->SpaltenEpi)==1?'SUM(e.size) AS Size,':'').' SUM(e.duration) AS Duration, COUNT(e.name) AS Count '.
 									 'FROM Staffeln AS s JOIN Episoden AS e ON s.season_nr = e.season_nr '.
-									 'WHERE s.season_nr = '.$entry["season_nr"];
+									 'WHERE s.season_nr = "'.$entry["season_nr"].'"';
 						}else if (($GET_arr['Tabelle'] == "Serien")){
 							$Query = 'SELECT '.(in_array("checked", $this->SpaltenEpi)==1?'avg(e.checked) AS Checked,':'').' '.
 											(in_array("views", $this->SpaltenEpi)==1?'avg(e.views) AS Views,':'').' '.
